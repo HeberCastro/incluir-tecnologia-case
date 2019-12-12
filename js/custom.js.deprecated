@@ -1,0 +1,46 @@
+function makeRequest(url, type) {
+	var ourRequest = new XMLHttpRequest();
+	ourRequest.open("GET", url, true);
+	ourRequest.onreadystatechange = function() {
+		if (this.readyState == 4) {
+		  	var result = this.responseText;
+		  	var json = JSON.parse(result);
+		  	if(type == "region"){
+		  		controllerRegion(json);
+		  	}
+		  	else{
+		  		controllerCountry(json);
+		  	}
+		}
+	};
+	ourRequest.send();
+}
+
+function controllerRegion(json, type){
+	var resultString = "<h1>Região</h1>";
+
+	for(var i = 0; i< json.length; i++){
+		resultString += "<p>Pais: " + json[i].name + "</p>";
+	}
+	teste += resultString;
+	
+	console.log(teste);
+	document.getElementById("mainContent").innerHTML = teste;
+}
+
+function controllerCountry(json, type){
+	var resultString = "<h1>Região</h1>";
+
+	for(var i = 0; i< json.length; i++){
+		resultString += "<p>Pais: " + json[i].name + "</p>";
+	}
+	
+	document.getElementById("mainContent").innerHTML = resultString;
+}
+
+var urlRegion = "https://restcountries.eu/rest/v2/region/";
+var urlCountry = "https://restcountries.eu/rest/v2/alpha/";
+
+var json2 =  makeRequest(urlRegion + "americas", "region");
+var teste = "";
+
